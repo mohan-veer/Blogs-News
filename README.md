@@ -12,6 +12,7 @@ Web Application to view and write news blogs using python Djano webframe work
 
 ## ScreenShots
 ![picture alt](https://github.com/mohan-veer/Blogs-News/blob/main/images/login.png)
+![picture alt](https://github.com/mohan-veer/Blogs-News/blob/main/images/signup.png)
 ![picture alt](https://github.com/mohan-veer/Blogs-News/blob/main/images/dashboard.png)
 ![picture alt](https://github.com/mohan-veer/Blogs-News/blob/main/images/createblog.png)
 ![picture alt](https://github.com/mohan-veer/Blogs-News/blob/main/images/viewblog.png)
