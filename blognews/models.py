@@ -1,5 +1,6 @@
 from django.db import models
 import re
+from django.utils import timezone
 
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 
@@ -59,15 +60,14 @@ class UserManager(models.Manager):
 
 
 class User(models.Model):
-    user_id = models.EmailField(max_length=30)
-    user_fname = models.CharField(max_length=30)
-    user_lname = models.CharField(max_length=30)
-    user_password = models.CharField(max_length=20)
-    user_address = models.TextField()
-    user_phone = models.DecimalField(max_digits=10, decimal_places=0)
+    user_id = models.EmailField(max_length=30, null=False, blank=False)
+    user_fname = models.CharField(max_length=30, null=False, blank=False)
+    user_lname = models.CharField(max_length=30, null=False, blank=False)
+    user_password = models.CharField(max_length=20, null=False, blank=False)
+    user_phone = models.DecimalField(max_digits=10, decimal_places=0, null=False, blank=False)
 
     def __repr__(self):
-        return f"<User: {self.user_id}  {self.user_fname} {self.user_lname} {self.user_password} {self.user_address} {self.user_phone}>"
+        return f"<User: {self.user_id}  {self.user_fname} {self.user_lname} {self.user_password} {self.user_phone}>"
 
     objects = UserManager()
 
@@ -79,7 +79,7 @@ class NewsArticle(models.Model):
     description = models.CharField(max_length=1000, null=True, blank=True)
     url = models.CharField(max_length=300, null=True, blank=True)
     urlToImg = models.CharField(max_length=800, null=True, blank=True)
-    publishedAt = models.DateTimeField(null=True, blank=True)
+    publishedAt = models.DateTimeField(default=timezone.now, null=True, blank=True)
     content = models.TextField(null=True, blank=True)
 
     # def __repr__(self):

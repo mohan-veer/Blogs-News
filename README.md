@@ -10,4 +10,3 @@ Web Application to view and write news blogs using python Djano webframe work
 * Javascript
 * CSS
 
-

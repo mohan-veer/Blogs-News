@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
 from pathlib import Path
 import os
 
@@ -108,13 +107,25 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
 USE_L10N = True
 
 USE_TZ = True
+
+
+#Email Var
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST ='smtp.gmail.com'
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = 'newsblogservice@gmail.com'
+EMAIL_HOST_USER = 'newsblogservice@gmail.com'
+EMAIL_HOST_PASSWORD = 'Newsapi@123'
+SERVER_EMAIL = 'newsblogservice@gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -127,5 +138,3 @@ STATICFILES_DIRS = (
 )
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-

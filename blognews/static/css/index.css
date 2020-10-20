@@ -54,7 +54,7 @@ a:hover { text-decoration: none }
 
 
 #pswd_info {
-	background: #dfdfdf none repeat scroll 0 0;
+	background: #f7fcff none repeat scroll 0 0;
 	color: #fff;
 	left: 1300px;
 	position: fixed;
@@ -62,7 +62,7 @@ a:hover { text-decoration: none }
 	z-index: 99;
 }
 #pswd_info h4{
-    background: black none repeat scroll 0 0;
+    background: #007bff none repeat scroll 0 0;
     display: block;
     font-size: 14px;
     letter-spacing: 0;
@@ -95,7 +95,7 @@ a:hover { text-decoration: none }
 
 
 #pswd_info::before {
-    background: #dfdfdf none repeat scroll 0 0;
+    background: #f7fcff none repeat scroll 0 0;
     content: "";
     height: 25px;
     left: -13px;

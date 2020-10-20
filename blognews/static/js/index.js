@@ -1,6 +1,6 @@
 $(document).ready(function(){
-
-	$('input[type=password]').keyup(function() {
+console.log("inside JS")
+	$('input[name=password]').keyup(function() {
 		var pswd = $(this).val();
 
 		//validate the length
