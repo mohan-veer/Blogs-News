@@ -227,10 +227,10 @@ def reset(request):
 def tokenVerification(request):
     global token
     entered_token = int(request.POST.get('token'))
-    # print("ENTERED TOKEN IS ", entered_token)
-    # print("GLOBAL TOKEN IS ",token)
-    # print("ENTERED TOKEN IS Type", type(entered_token))
-    # print("GLOBAL TOKEN IS Type", type(token))
+    print("ENTERED TOKEN IS ", entered_token)
+    print("GLOBAL TOKEN IS ",token)
+    print("ENTERED TOKEN IS Type", type(entered_token))
+    print("GLOBAL TOKEN IS Type", type(token))
     if entered_token == token:
         context = {
             'usage' : 'passwordReset'
