@@ -60,11 +60,11 @@ class UserManager(models.Manager):
 
 
 class User(models.Model):
-    user_id = models.EmailField(max_length=30, null=False, blank=False)
-    user_fname = models.CharField(max_length=30, null=False, blank=False)
-    user_lname = models.CharField(max_length=30, null=False, blank=False)
-    user_password = models.CharField(max_length=20, null=False, blank=False)
-    user_phone = models.DecimalField(max_digits=10, decimal_places=0, null=False, blank=False)
+    user_id = models.EmailField(max_length=100, null=False, blank=False)
+    user_fname = models.CharField(max_length=100, null=False, blank=False)
+    user_lname = models.CharField(max_length=100, null=False, blank=False)
+    user_password = models.CharField(max_length=100, null=False, blank=False)
+    user_phone = models.DecimalField(max_digits=100, decimal_places=0, null=False, blank=False)
 
     def __repr__(self):
         return f"<User: {self.user_id}  {self.user_fname} {self.user_lname} {self.user_password} {self.user_phone}>"
