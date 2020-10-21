@@ -7,7 +7,7 @@ class NewsAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Author', {'fields': ['source', 'author']}),
         ('Title', {'fields': ['title', 'description']}),
-        ('Content', {'fields': ['urlToImage', 'content']}),
+        ('Content', {'fields': ['urlToImg', 'content']}),
         ('Source', {'fields': ['url', 'publishedAt']})
     ]
 
