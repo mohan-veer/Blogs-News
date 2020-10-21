@@ -9,15 +9,12 @@ import requests
 import json
 import random
 
-current_user = None
-token = None
 
 def login(request):
     return render(request, 'blognews/base.html')
 
 
 def loginvalidate(request):
-    global current_user
     # uname = request.POST.get('email', " ")
     # password = request.POST.get('password', " ")
     errors = User.objects.login_validator(request.POST)
@@ -36,7 +33,7 @@ def loginvalidate(request):
                 request.session['new_user_id'] = user_matches[0].user_id
                 request.session['name'] = user_matches[0].user_fname
                 request.session['logged_in'] = True
-                current_user = user_matches[0].user_id
+                request.session['current_user'] = user_matches[0].user_id
                 return redirect('/success/')
             else:
                 messages.error(request, 'Password is incorrect')
@@ -157,7 +154,6 @@ def create(request):
 
 
 def savenews(request):
-    global current_user;
     title = request.POST.get('title'," ")
     description = request.POST.get('description'," ")
     content = request.POST.get('content', " ")
@@ -167,22 +163,24 @@ def savenews(request):
         return redirect(reverse('create'))
     else:
         #print("the current author is ", current_user)
-        author = current_user
+        author = request.session['current_user']
         news_created = NewsArticle.objects.create(author=author, title=title, description=description, content=content)
         messages.success(request,"Blog Created")
         return redirect(reverse('create'))
 
 
 def yourblogs(request):
-    all_blogs = NewsArticle.objects.filter(author=current_user)
+    cuser = request.session['current_user']
+    all_blogs = NewsArticle.objects.filter(author=cuser)
     context = {'blogs':all_blogs}
     return render(request, 'blognews/blogs.html', context)
 
 
 def deleteblog(request):
+    cuser = request.session['current_user']
     blog_id = request.POST.get('delete')
     #print("the found blog id is ", blog_id)
-    NewsArticle.objects.filter(id=blog_id,author=current_user).delete()
+    NewsArticle.objects.filter(id=blog_id,author=cuser).delete()
     return redirect(reverse('yourblogs'))
 
 
@@ -201,19 +199,19 @@ def forgot(request, newContext={}):
 
 
 def reset(request):
-    global  token, current_user
     user_email = request.POST.get('user_email')
     user_record = User.objects.filter(user_id=user_email)
     if len(user_record)==0:
         messages.error(request, "User doesn't exist" )
         return redirect('forgot')
     else:
-        current_user = user_record[0].user_id
+        #current_user = user_record[0].user_id
         #print("THE CURRENT USER IS", current_user)
+        request.session['current_user'] = user_record[0].user_id
         subject = 'Password Reset'
         from_email = 'newsblogservice@gmail.com'
-        token = random.randint(1000, 10000)
-        message = "Please enter the given one time secret token to reset your password : "+str(token)
+        request.session['token'] = random.randint(1000, 10000)
+        message = "Please enter the given one time secret token to reset your password : "+str(request.session['token'])
         msg = EmailMessage(subject, message, from_email, [user_email])
         msg.send()
         #print("THE RESULT OF SEND AMIL", msg)
@@ -225,13 +223,11 @@ def reset(request):
 
 
 def tokenVerification(request):
-    global token
     entered_token = int(request.POST.get('token'))
-    print("ENTERED TOKEN IS ", entered_token)
-    print("GLOBAL TOKEN IS ",token)
-    print("ENTERED TOKEN IS Type", type(entered_token))
-    print("GLOBAL TOKEN IS Type", type(token))
-    if entered_token == token:
+    # print("ENTERED TOKEN IS ", entered_token)
+    # print("GLOBAL TOKEN IS ",request.session['token'])
+
+    if entered_token == request.session['token']:
         context = {
             'usage' : 'passwordReset'
         }
@@ -250,8 +246,8 @@ def resetPassword(request):
         messages.error(request, "Confirm password and New Password are not same")
         return redirect('resetPassword')
     else:
-
-        user_record = User.objects.get(user_id=current_user)
+        cuser = request.session['current_user']
+        user_record = User.objects.get(user_id=cuser)
         hashed = bcrypt.hashpw(request.POST.get('password').encode(), bcrypt.gensalt())
         decoded_hash = hashed.decode()
         user_record.user_password = decoded_hash
